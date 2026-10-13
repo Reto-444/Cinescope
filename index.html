@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0b" />
+  <title>CineScope — найди историю, которая останется с тобой</title>
+  <meta name="description" content="CineScope — интерактивный каталог фильмов: подборки, жанры, избранное и подробная информация о картинах." />
+  <meta name="author" content="CineScope" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="CineScope — каталог фильмов" />
+  <meta property="og:description" content="Находи истории, которые остаются с тобой." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://image.tmdb.org" />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#home" class="logo" aria-label="CineScope — на главную">
+        <span class="logo__mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="26" height="26" fill="none">
+            <rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="2"/>
+            <circle cx="10" cy="11" r="1.6" fill="currentColor"/>
+            <circle cx="10" cy="16" r="1.6" fill="currentColor"/>
+            <circle cx="10" cy="21" r="1.6" fill="currentColor"/>
+            <circle cx="22" cy="11" r="1.6" fill="currentColor"/>
+            <circle cx="22" cy="16" r="1.6" fill="currentColor"/>
+            <circle cx="22" cy="21" r="1.6" fill="currentColor"/>
+            <path d="M14 12.5l6 3.5-6 3.5v-7z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="logo__text">CineScope</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <a href="#home" class="nav__link is-active" data-nav="home">Главная</a>
+        <a href="#catalog" class="nav__link" data-nav="catalog">Каталог</a>
+        <a href="#genres" class="nav__link" data-nav="genres">Жанры</a>
+        <a href="#favorites" class="nav__link" data-nav="favorites">
+          Избранное <span class="nav__badge" id="favBadge" hidden>0</span>
+        </a>
+      </nav>
+
+      <div class="header__actions">
+        <button class="icon-btn" id="searchToggle" aria-label="Открыть поиск" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn" id="themeToggle" aria-label="Переключить тему">
+          <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Открыть меню" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Раскрывающаяся строка поиска -->
+    <div class="search-bar" id="searchBar" hidden>
+      <div class="container search-bar__inner">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+        </svg>
+        <input type="search" id="headerSearch" placeholder="Поиск по названию…" aria-label="Поиск фильмов" />
+        <button class="icon-btn" id="searchClose" aria-label="Закрыть поиск">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home" aria-label="Рекомендуемый фильм">
+      <div class="hero__backdrop" aria-hidden="true"></div>
+      <div class="hero__gradient" aria-hidden="true"></div>
+
+      <div class="container hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Выбор редакции
+        </div>
+
+        <h1 class="hero__title">Город после полуночи</h1>
+
+        <div class="hero__meta">
+          <span>2025</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span>Триллер, Нуар</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="rating-inline">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.77 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/>
+            </svg>
+            8.7 <span class="muted">CineScope</span>
+          </span>
+        </div>
+
+        <p class="hero__desc">
+          Ночной мегаполис, где каждый перекрёсток хранит чужую тайну. Частный детектив берётся
+          за дело об исчезновении, не подозревая, что город сам ведёт его к разгадке.
+        </p>
+
+        <div class="hero__actions">
+          <button class="btn btn--primary" data-open-movie="city-after-midnight">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/>
+            </svg>
+            Подробнее
+          </button>
+          <button class="btn btn--ghost" data-fav="city-after-midnight" aria-pressed="false">
+            <svg class="ico-heart" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 10-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 000-7.8z"/>
+            </svg>
+            <span class="fav-label">В избранное</span>
+          </button>
+        </div>
+
+        <div class="hero__indicator" aria-hidden="true">
+          <span class="hero__indicator-bar"><span></span></span>
+          <span class="hero__indicator-text">Рекомендуем сегодня</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GENRES ================= -->
+    <section class="section genres" id="genres">
+      <div class="container">
+        <header class="section__head">
+          <div>
+            <h2 class="section__title">Популярные жанры</h2>
+            <p class="section__sub">Быстрый переход к любимой категории</p>
+          </div>
+        </header>
+
+        <div class="genres__list" id="genresList" role="list"></div>
+      </div>
+    </section>
+
+    <!-- ================= CATALOG ================= -->
+    <section class="section catalog" id="catalog">
+      <div class="container">
+        <header class="section__head">
+          <div>
+            <h2 class="section__title">Открой свой следующий фильм</h2>
+            <p class="section__sub">
+              Найдено <span id="resultCount">0</span> из <span id="totalCount">0</span> картин
+            </p>
+          </div>
+
+          <div class="catalog__view" role="group" aria-label="Вид каталога">
+            <button class="view-btn is-active" data-view="grid" aria-label="Сетка">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+              </svg>
+            </button>
+            <button class="view-btn" data-view="list" aria-label="Список">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="filters" role="region" aria-label="Фильтры каталога">
+          <div class="filters__row">
+            <label class="field field--search">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+              </svg>
+              <input type="search" id="catalogSearch" placeholder="Поиск по названию…" aria-label="Поиск в каталоге" />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Жанр</span>
+              <select id="filterGenre" aria-label="Фильтр по жанру"></select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Год</span>
+              <select id="filterYear" aria-label="Фильтр по году"></select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Рейтинг</span>
+              <select id="filterRating" aria-label="Фильтр по рейтингу">
+                <option value="all">Любой</option>
+                <option value="9">9.0 и выше</option>
+                <option value="8">8.0 и выше</option>
+                <option value="7">7.0 и выше</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field__label">Сортировка</span>
+              <select id="sortSelect" aria-label="Сортировка">
+                <option value="popularity">По популярности</option>
+                <option value="rating">По рейтингу</option>
+                <option value="year">По году выпуска</option>
+                <option value="title">По названию</option>
+              </select>
+            </label>
+
+            <button class="btn btn--ghost btn--reset" id="resetFilters" type="button">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M3 12a9 9 0 1015.5-6.4M3 4v5h5"/>
+              </svg>
+              Сбросить
+            </button>
+          </div>
+        </div>
+
+        <div class="movies" id="moviesGrid" aria-live="polite"></div>
+
+        <div class="empty" id="catalogEmpty" hidden>
+          <div class="empty__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+            </svg>
+          </div>
+          <h3>Ничего не найдено</h3>
+          <p>Попробуйте изменить условия поиска или сбросить фильтры.</p>
+          <button class="btn btn--primary" id="emptyReset" type="button">Сбросить фильтры</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAVORITES ================= -->
+    <section class="section favorites" id="favorites">
+      <div class="container">
+        <header class="section__head">
+          <div>
+            <h2 class="section__title">Ваше избранное</h2>
+            <p class="section__sub">
+              Сохранено <span id="favCount">0</span> фильмов — список хранится в вашем браузере
+            </p>
+          </div>
+          <button class="btn btn--ghost" id="clearFav" type="button">Очистить</button>
+        </header>
+
+        <div class="movies" id="favGrid" aria-live="polite"></div>
+
+        <div class="empty" id="favEmpty" hidden>
+          <div class="empty__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 10-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 000-7.8z"/>
+            </svg>
+          </div>
+          <h3>Пока пусто</h3>
+          <p>Добавляйте фильмы в избранное, чтобы возвращаться к ним в любой момент.</p>
+          <a class="btn btn--primary" href="#catalog">Перейти в каталог</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RECENT ================= -->
+    <section class="section recent" id="recent" hidden>
+      <div class="container">
+        <header class="section__head">
+          <div>
+            <h2 class="section__title">Недавно просмотренные</h2>
+            <p class="section__sub">Фильмы, которые вы открывали в этой сессии — <span id="recentCount">0</span></p>
+          </div>
+        </header>
+        <div class="movies movies--compact" id="recentGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#home" class="logo logo--footer">
+          <span class="logo__mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="22" height="22" fill="none">
+              <rect x="3" y="6" width="26" height="20" rx="3" stroke="currentColor" stroke-width="2"/>
+              <circle cx="10" cy="11" r="1.6" fill="currentColor"/>
+              <circle cx="10" cy="16" r="1.6" fill="currentColor"/>
+              <circle cx="10" cy="21" r="1.6" fill="currentColor"/>
+              <path d="M14 12.5l6 3.5-6 3.5v-7z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="logo__text">CineScope</span>
+        </a>
+        <p class="footer__tagline">Находи истории, которые остаются с тобой.</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Навигация в подвале">
+        <div>
+          <h4>Разделы</h4>
+          <a href="#home">Главная</a>
+          <a href="#catalog">Каталог</a>
+          <a href="#genres">Жанры</a>
+          <a href="#favorites">Избранное</a>
+        </div>
+        <div>
+          <h4>О проекте</h4>
+          <a href="#catalog">Демонстрационный каталог</a>
+          <a href="#favorites">Локальное хранилище</a>
+          <a href="#home">Без регистрации</a>
+        </div>
+      </nav>
+    </div>
+    <div class="container footer__bottom">
+      <span>© <span id="year"></span> CineScope. Демонстрационный проект.</span>
+      <span>Сделано на HTML, CSS и Vanilla JS.</span>
+    </div>
+  </footer>
+
+  <!-- ================= MODAL ================= -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__overlay" data-close-modal></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" data-close-modal aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <div class="modal__body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- ================= TOAST ================= -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
